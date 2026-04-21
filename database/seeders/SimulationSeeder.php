@@ -13,6 +13,6 @@ class SimulationSeeder extends Seeder
      */
     public function run(): void
     {
-        Simulation::factory()->count(1542)->create();
+        Simulation::factory()->count(152)->create();
     }
 }

@@ -13,6 +13,6 @@ class DailyMetricsSeeder extends Seeder
      */
     public function run(): void
     {
-        DailyMetric::factory()->count(1452)->create();
+        DailyMetric::factory()->count(145)->create();
     }
 }
