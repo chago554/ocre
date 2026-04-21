@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class DailyMetric extends Model
 {
+    use HasFactory;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -13,7 +16,7 @@ class DailyMetric extends Model
      */
     protected $fillable = [
         'date',
-        'active_user',
+        'active_users',
         'total_transactions',
         'total_simulations',
     ];

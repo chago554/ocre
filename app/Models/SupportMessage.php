@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class SupportMessage extends Model
 {
+    use HasFactory;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -14,7 +17,7 @@ class SupportMessage extends Model
     protected $fillable = [
         'user_id',
         'subject',
-        'body'
-        ,'is_resolved'
+        'body',
+        'is_resolved'
     ];
 }

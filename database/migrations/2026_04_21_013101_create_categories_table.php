@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('icon');
-            $table->enum('type', ['gasto', 'ingreso']);
+            $table->enum('type', ['gasto', 'ingreso', 'meta']);
             $table->timestamps();
             $table->softDeletes();
         });
