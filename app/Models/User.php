@@ -49,4 +49,35 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    /**
+     * Relacion con tabla de transactions
+     *
+     * @return void
+     */
+    public function transactions()
+    {
+        return $this->hasMany(Transaction::class);
+    }
+
+    /**
+     * Relacion con la tabla simulations
+     *
+     * @return void
+     */
+    public function simulations()
+    {
+        return $this->hasMany(Simulation::class);
+    }
+
+    /**
+     * Relacion con tabla support_messages
+     *
+     * @return void
+     */
+    public function support_message()
+    {
+        return $this->hasMany(SupportMessage::class);
+    }
+
 }

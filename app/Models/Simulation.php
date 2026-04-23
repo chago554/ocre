@@ -19,4 +19,14 @@ class Simulation extends Model
         'months_term',
         'final_yied'
     ];
+
+    /**
+     * Relacion con la tabla users
+     *
+     * @return void
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

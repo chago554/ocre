@@ -20,4 +20,27 @@ class Transaction extends Model
         'amount',
         'note',
     ];
+
+    /**
+     * Relacion con la tabla de users
+     *
+     * @return void
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Relacion con la tabla categories
+     *
+     * @return void
+     */
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
+
+
+    
 }

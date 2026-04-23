@@ -16,4 +16,15 @@ class Category extends Model
         'icon',
         'type',
     ];
+
+
+    /**
+     *  Relacion con la tabla transactions
+     *
+     * @return void
+     */
+    public function transactions()
+    {
+        return $this->hasMany(Transaction::class);
+    }
 }

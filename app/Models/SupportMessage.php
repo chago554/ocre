@@ -20,4 +20,14 @@ class SupportMessage extends Model
         'body',
         'is_resolved'
     ];
+
+    /**
+     * Relacion con la tabla users
+     *
+     * @return void
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
