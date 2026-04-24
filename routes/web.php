@@ -5,7 +5,7 @@ use App\Http\Controllers\Api\AdminDashboardController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('login', 302);
 });
 
 Route::get('/dashboard', function () {

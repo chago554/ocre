@@ -2,46 +2,78 @@
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
-    <form method="POST" action="{{ route('login') }}">
+    <div class="text-center mb-10">
+        <h2 class="text-3xl font-bold tracking-tight">Inicia sesión</h2>
+    </div>
+
+    <form method="POST" action="{{ route('login') }}" class="space-y-6">
         @csrf
 
-        <!-- Email Address -->
-        <div>
+        <div class="form-control">
             <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+
+
+            <x-text-input id="email" class="block mt-1 w-full" type="text" name="email" :value="old('email')"
+                required autofocus autocomplete="email" placeholder="email@ejemplo.com" />
         </div>
 
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
+        <div class="form-control">
+            <x-input-label for="name" :value="__('Password')" />
 
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="current-password" />
+            <div class="relative">
 
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
+                <x-text-input id="password" class="block mt-1 w-full" type="password" name="password" :value="old('password')"
+                    required autocomplete="password" placeholder="********" />
+
+                <span class="absolute inset-y-0 right-3 flex items-center text-gray-400">
+
+                    <button type="button" id="togglePassword"
+                        class="absolute right-3 flex items-center text-info hover:text-primary transition-colors focus:outline-none">
+                        {{-- Icono Ojo (Por defecto) --}}
+                        <x-lucide-eye id="eyeIcon" class="w-5 h-5" />
+                        {{-- Icono Ojo Tachado (Oculto inicialmente) --}}
+                        <x-lucide-eye-off id="eyeOffIcon" class="w-5 h-5 hidden" />
+                    </button>
+                </span>
+            </div>
+
+            <div class="text-right mt-2">
+                <a href="{{ route('password.request') }}"
+                    class="text-xs text-secondary font-medium hover:underline">Olvidé mi contraseña</a>
+            </div>
         </div>
 
-        <!-- Remember Me -->
-        <div class="block mt-4">
-            <label for="remember_me" class="inline-flex items-center">
-                <input id="remember_me" type="checkbox" class="rounded dark:bg-gray-900 border-gray-300 dark:border-gray-700 text-indigo-600 shadow-sm focus:ring-indigo-500 dark:focus:ring-indigo-600 dark:focus:ring-offset-gray-800" name="remember">
-                <span class="ms-2 text-sm text-gray-600 dark:text-gray-400">{{ __('Remember me') }}</span>
-            </label>
-        </div>
-
-        <div class="flex items-center justify-end mt-4">
-            @if (Route::has('password.request'))
-                <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('password.request') }}">
-                    {{ __('Forgot your password?') }}
-                </a>
-            @endif
-
-            <x-primary-button class="ms-3">
+        <div class="pt-4">
+            <x-primary-button>
                 {{ __('Log in') }}
             </x-primary-button>
         </div>
+
+        <p class="text-center text-xs font-medium text-black mt-4">
+            ¿No tienes cuenta? <a href="{{ route('register') }}" class="text-secondary hover:underline">Regístrate</a>
+        </p>
     </form>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const passwordInput = document.getElementById('password');
+            const toggleButton = document.getElementById('togglePassword');
+            const eyeIcon = document.getElementById('eyeIcon');
+            const eyeOffIcon = document.getElementById('eyeOffIcon');
+
+            toggleButton.addEventListener('click', function() {
+                // Cambiar tipo de input
+                const isPassword = passwordInput.type === 'password';
+                passwordInput.type = isPassword ? 'text' : 'password';
+
+                // Alternar iconos
+                if (isPassword) {
+                    eyeIcon.classList.add('hidden');
+                    eyeOffIcon.classList.remove('hidden');
+                } else {
+                    eyeIcon.classList.remove('hidden');
+                    eyeOffIcon.classList.add('hidden');
+                }
+            });
+        });
+    </script>
 </x-guest-layout>

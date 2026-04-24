@@ -21,25 +21,27 @@ return Application::configure(basePath: dirname(__DIR__))
     })
     ->withExceptions(function (Exceptions $exceptions) {
 
-        $exceptions->render(function (\Symfony\Component\HttpKernel\Exception\NotFoundHttpException $e, Request $request) {
+        // Manejo para 404 (Not Found)
+        $exceptions->render(function (\Symfony\Component\HttpKernel\Exception\NotFoundHttpException $e, $request) {
             if ($request->is('api/*')) {
                 return response()->json([
                     'success' => false,
                     'message' => 'El recurso solicitado no existe en OCRE.'
                 ], 404);
             }
-        
+        });
 
-            $exceptions->render(function (\Illuminate\Validation\ValidationException $e, Request $request) {
-            return response()->json([
-                'message' => 'Datos inválidos.',
-                'errors' => $e->errors(),
-            ], 422);
-            
+        // Manejo para errores de validación
+        $exceptions->render(function (\Illuminate\Validation\ValidationException $e, $request) {
+            if ($request->is('api/*')) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Datos inválidos.',
+                    'errors' => $e->errors(),
+                ], 422);
+            }
         });
 
 
-
-    });
 
     })->create();
