@@ -14,7 +14,7 @@ Route::post('/password/email', [ForgotPasswordController::class, 'sendResetCode'
 Route::post('/password/reset', [ForgotPasswordController::class, 'resetPassword']);
 
 
-// Rutas protegidas
+// Rutas protegidas API
 Route::middleware('auth:api')->group(function () {
     Route::get('/user', function (Request $request) {
         return $request->user();
@@ -32,6 +32,5 @@ Route::middleware('auth:api')->group(function () {
 
    // Route::post('/get-transactions', [TransactionController::class, 'index']);
     
-
 
 });

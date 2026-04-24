@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +18,10 @@ class DailyMetricFactory extends Factory
     public function definition(): array
     {
         return [
-            'date' => fake()->unique()->date(),
+            'date' => fake()->unique()->dateTimeBetween(
+                Carbon::now()->subMonth()->startOfMonth(),
+                Carbon::now()
+            )->format('Y-m-d'),
             'active_users' => fake()->numberBetween(10, 6565),
             'total_transactions' => fake()->numberBetween(5, 5041),
             'total_simulations' => fake()->numberBetween(1, 20145)

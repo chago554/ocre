@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\DailyMetric;
+use Carbon\Carbon;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -13,6 +14,14 @@ class DailyMetricsSeeder extends Seeder
      */
     public function run(): void
     {
-        DailyMetric::factory()->count(145)->create();
+        $inicio = Carbon::now()->subMonth()->startOfMonth();
+        $fin = Carbon::now();
+        
+        while ($inicio <= $fin) {
+            DailyMetric::factory()->create([
+                'date' => $inicio->copy()->format('Y-m-d'),
+            ]);
+            $inicio->addDay();
+        }
     }
 }
