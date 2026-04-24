@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\ForgotPasswordController;
+use App\Http\Controllers\Api\TransactionController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -19,6 +20,17 @@ Route::middleware('auth:api')->group(function () {
         return $request->user();
     });
 
+    // Transacciones
+    Route::get('/total-balance', [TransactionController::class, 'getTotalBalance']);
+    Route::get('/total-incomes', [TransactionController::class, 'getTotalIncomes']);
+    Route::get('/total-expenses', [TransactionController::class, 'getTotalExpenses']);
+    Route::get('/last-transactions', [TransactionController::class, 'getLastTransactions']);
+    Route::get('/categories-expenses', [TransactionController::class, 'getCategoriesExpenses']);
+    Route::get('/categories-incomes', [TransactionController::class, 'getCategoriesIncomes']);
+    
+    
+
+   // Route::post('/get-transactions', [TransactionController::class, 'index']);
     
 
 
