@@ -106,7 +106,7 @@ class AdminDashboardController extends Controller
         try {
             $inicio =Carbon::now()->startOfMonth();
             $fin = Carbon::now();
-            $users = User::where('role', 'user')->whereBetween('created_at', [$inicio, $fin])->orderBy('created_at', 'desc')->limit(50)->get();
+            $users = User::where('role', 'user')->whereBetween('created_at', [$inicio, $fin])->orderBy('created_at', 'desc')->limit(10)->get();
             
             $data = $users->map(function($item) use ($users){
                 return [
