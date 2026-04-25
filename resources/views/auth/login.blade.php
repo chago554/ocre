@@ -11,8 +11,6 @@
 
         <div class="form-control">
             <x-input-label for="email" :value="__('Email')" />
-
-
             <x-text-input id="email" class="block mt-1 w-full" type="text" name="email" :value="old('email')"
                 required autofocus autocomplete="email" placeholder="email@ejemplo.com" />
         </div>

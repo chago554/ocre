@@ -1,11 +1,10 @@
 <section>
-    <header>
-        <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
-            {{ __('Update Password') }}
+    <header class="mb-6">
+        <h2 class="text-lg font-bold text-gray-800">
+            {{ __('Actualizar contraseña') }}
         </h2>
-
-        <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
-            {{ __('Ensure your account is using a long, random password to stay secure.') }}
+        <p class="mt-1 text-sm text-gray-500">
+            {{ __('Usa una contraseña larga y aleatoria para mantener tu cuenta segura.') }}
         </p>
     </header>
 
@@ -13,35 +12,59 @@
         @csrf
         @method('put')
 
-        <div>
-            <x-input-label for="update_password_current_password" :value="__('Current Password')" />
-            <x-text-input id="update_password_current_password" name="current_password" type="password" class="mt-1 block w-full" autocomplete="current-password" />
-            <x-input-error :messages="$errors->updatePassword->get('current_password')" class="mt-2" />
+        <div class="text-left" x-data="{ show: false }">
+            <x-input-label for="update_password_current_password" :value="__('Contraseña actual')" />
+            <div class="relative mt-1">
+                <x-text-input id="update_password_current_password" name="current_password" :type="'password'"
+                    x-bind:type="show ? 'text' : 'password'" class="block w-full pr-10" autocomplete="current-password"
+                    placeholder="Ingresa tu contraseña actual" />
+                <button type="button" @click="show = !show"
+                    class="absolute inset-y-0 right-3 flex items-center text-gray-400 hover:text-gray-600">
+                    <x-lucide-eye x-show="!show" class="w-4 h-4" />
+                    <x-lucide-eye-off x-show="show" class="w-4 h-4" />
+                </button>
+            </div>
+            <x-input-error :messages="$errors->updatePassword->get('current_password')" class="mt-1" />
         </div>
 
-        <div>
-            <x-input-label for="update_password_password" :value="__('New Password')" />
-            <x-text-input id="update_password_password" name="password" type="password" class="mt-1 block w-full" autocomplete="new-password" />
-            <x-input-error :messages="$errors->updatePassword->get('password')" class="mt-2" />
+        <div class="text-left" x-data="{ show: false }">
+            <x-input-label for="update_password_password" :value="__('Nueva contraseña')" />
+            <div class="relative mt-1">
+                <x-text-input id="update_password_password" name="password" x-bind:type="show ? 'text' : 'password'"
+                    class="block w-full pr-10" autocomplete="new-password" placeholder="Mínimo 8 caracteres" />
+                <button type="button" @click="show = !show"
+                    class="absolute inset-y-0 right-3 flex items-center text-gray-400 hover:text-gray-600">
+                    <x-lucide-eye x-show="!show" class="w-4 h-4" />
+                    <x-lucide-eye-off x-show="show" class="w-4 h-4" />
+                </button>
+            </div>
+            <x-input-error :messages="$errors->updatePassword->get('password')" class="mt-1" />
         </div>
 
-        <div>
-            <x-input-label for="update_password_password_confirmation" :value="__('Confirm Password')" />
-            <x-text-input id="update_password_password_confirmation" name="password_confirmation" type="password" class="mt-1 block w-full" autocomplete="new-password" />
-            <x-input-error :messages="$errors->updatePassword->get('password_confirmation')" class="mt-2" />
+        <div class="text-left" x-data="{ show: false }">
+            <x-input-label for="update_password_password_confirmation" :value="__('Confirmar contraseña')" />
+            <div class="relative mt-1">
+                <x-text-input id="update_password_password_confirmation" name="password_confirmation"
+                    x-bind:type="show ? 'text' : 'password'" class="block w-full pr-10" autocomplete="new-password"
+                    placeholder="Repite la nueva contraseña" />
+                <button type="button" @click="show = !show"
+                    class="absolute inset-y-0 right-3 flex items-center text-gray-400 hover:text-gray-600">
+                    <x-lucide-eye x-show="!show" class="w-4 h-4" />
+                    <x-lucide-eye-off x-show="show" class="w-4 h-4" />
+                </button>
+            </div>
+            <x-input-error :messages="$errors->updatePassword->get('password_confirmation')" class="mt-1" />
         </div>
 
-        <div class="flex items-center gap-4">
-            <x-primary-button>{{ __('Save') }}</x-primary-button>
+        <div class="flex flex-col items-center gap-3 pt-2">
+            <x-primary-button>{{ __('Guardar') }}</x-primary-button>
 
             @if (session('status') === 'password-updated')
-                <p
-                    x-data="{ show: true }"
-                    x-show="show"
-                    x-transition
-                    x-init="setTimeout(() => show = false, 2000)"
-                    class="text-sm text-gray-600 dark:text-gray-400"
-                >{{ __('Saved.') }}</p>
+                <script>
+                    document.addEventListener('DOMContentLoaded', () => {
+                        Toast.success("{{ __('Contraseña actualizada.') }}");
+                    });
+                </script>
             @endif
         </div>
     </form>

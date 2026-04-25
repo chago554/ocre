@@ -1,3 +1,47 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+.ocre-swal-popup {
+    border-radius: 14px !important;
+    font-family: inherit !important;
+    padding: 2rem !important;
+}
+
+.ocre-swal-title {
+    font-size: 1.2rem !important;
+    font-weight: 600 !important;
+    color: #1a1a1a !important;
+}
+
+.ocre-swal-confirm {
+    border-radius: 8px !important;
+    font-weight: 500 !important;
+    padding: 0.5rem 1.5rem !important;
+}
+
+.ocre-swal-cancel {
+    border-radius: 8px !important;
+    font-weight: 500 !important;
+    padding: 0.5rem 1.5rem !important;
+    font-size: 1rem !important;
+    min-width: 120px !important;
+}
+
+.ocre-swal-confirm {
+    border-radius: 8px !important;
+    font-weight: 500 !important;
+    padding: 0.5rem 1.5rem !important;
+    font-size: 1rem !important;
+    min-width: 120px !important;
+}
+
+.ocre-swal-actions {
+    gap: 0.75rem !important;
+}
+
+.swal2-icon.swal2-warning {
+    border-color: #E8A020 !important;
+    color: #E8A020 !important;
+}

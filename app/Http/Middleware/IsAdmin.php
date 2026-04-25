@@ -19,6 +19,6 @@ class IsAdmin
             return $next($request);
         }
         
-        return redirect('/home')->with('error', 'No tienes permisos de administrador.');
+        return redirect('/')->with('error', 'No tienes permisos de administrador.');
     }
 }
