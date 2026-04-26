@@ -7,11 +7,11 @@
         <div class="flex items-center justify-between mb-6">
             <div>
                 <h1 class="text-2xl font-bold text-gray-800">Biblioteca</h1>
-                <p class="text-sm text-gray-500 mt-0.5">Gestiona los artículos publicados en la app.</p>
+                <p class="text-sm text-gray-500 mt-0.5">Gestiona los post publicados en la app.</p>
             </div>
             <a href="{{ route('biblioteca.create') }}"
                 class="btn bg-ocre hover:bg-primary/90 text-white rounded-xl border-none px-6 gap-2">
-                <x-lucide-plus class="w-4 h-4" /> Nuevo artículo
+                <x-lucide-plus class="w-4 h-4" /> Nuevo Post
             </a>
         </div>
 
@@ -167,7 +167,7 @@
                     if (!result.isConfirmed) return;
 
                     axios.delete(`{{ url('/biblioteca') }}/${id_post}`).then(async (response) => {
-                        Toast.success('Artículo eliminado correctamente.');
+                        Toast.success('Post eliminado correctamente.');
                         table.replaceData();
                     }).catch(error => {
                         Toast.error("Ha ocurrido un error!");

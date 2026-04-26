@@ -90,7 +90,7 @@ class PostController extends Controller
             'is_published' => $request->boolean('is_published'),
         ]);
 
-        return redirect()->route('biblioteca.index')->with('success', 'Artículo creado correctamente.');
+        return redirect()->route('biblioteca.index')->with('success', 'Post creado correctamente.');
     }
 
     /**

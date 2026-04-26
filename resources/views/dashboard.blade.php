@@ -5,7 +5,7 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-10">
             <x-stats-card id="count-simulaciones" title="Simulaciones Creadas" icon="zap" />
             <x-stats-card id="count-usuarios" title="Cuentas Nuevas" icon="users" />
-            <x-stats-card id="count-posts" title="Artículos Publicados" icon="file-text" />
+            <x-stats-card id="count-posts" title="Post Publicados" icon="file-text" />
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 max-h-7">
