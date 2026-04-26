@@ -1,66 +1,72 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# OCRE — Plataforma de Finanzas Personales
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+OCRE es una solución integral de gestión financiera personal que incluye un robusto panel de administración. El sistema está diseñado para operar de forma híbrida: como una **API JSON** para aplicaciones móviles y como una **aplicación web** responsiva para administradores y usuarios.
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 🚀 Stack Tecnológico
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+| Capa | Tecnología |
+| :--- | :--- |
+| **Framework** | Laravel 11 |
+| **Autenticación** | Laravel Passport (OAuth 2.0) + Breeze (Sesiones) |
+| **Frontend** | Blade + Tailwind CSS + DaisyUI + Alpine.js |
+| **Build Tool** | Vite |
+| **Testing** | Pest PHP |
+| **Documentación API** | L5-Swagger (OpenAPI) |
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+## 🏗️ Arquitectura del Sistema
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+El proyecto se divide en dos capas principales con responsabilidades definidas:
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### 1. API (Mobile First)
+* **Auth:** Login, registro y recuperación de contraseña mediante código de 6 dígitos vía email.
+* **Finanzas:** Gestión de balance total, ingresos, gastos y categorías.
+* **Seguridad:** Protegida mediante tokens de **Passport** (`auth:api`).
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### 2. Web (Panel Administrativo)
+* **Dashboard:** Visualización de métricas diarias e interacciones mediante **Chart.js**.
+* **Gestión de Perfil:** Edición de datos, seguridad y eliminación de cuenta.
+* **Control de Acceso:** Middleware personalizado `IsAdmin` para restringir secciones críticas.
 
-## Laravel Sponsors
+---
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+## 📊 Modelo de Datos y Relaciones
 
-### Premium Partners
+El sistema utiliza una estructura relacional optimizada con soporte para **SoftDeletes** en todos los modelos para garantizar la integridad del historial.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
 
-## Contributing
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+[Image of database schema relationship diagram]
 
-## Code of Conduct
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+* **User** 1:N **Transaction** N:1 **Category**
+* **User** 1:N **Simulation**
+* **User** 1:N **SupportMessage**
+* **Category:** Clasificación por tipo (gasto, ingreso, meta).
+* **InvestmentRate:** Parámetros para el simulador financiero.
+* **DailyMetric:** Agregados de datos para analíticas del dashboard.
+* **Post:** Artículos educativos con metadatos en formato `JSONB`.
 
-## Security Vulnerabilities
+---
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## ✨ Características Destacadas
 
-## License
+-   **Doble Autenticación:** Manejo simultáneo de sesiones de estado (Web) y tokens stateless (API).
+-   **Sistema de Roles:** Implementación de niveles `admin` y `user` con middleware de acceso.
+-   **Agregación de Datos:** Comando personalizado `app:aggregate-daily-metrics` para el procesamiento de estadísticas.
+-   **Simulador de Inversiones:** Cálculo dinámico de rendimientos basado en capital inicial y plazos mensuales.
+-   **Seguridad en Reset:** Flujo de recuperación de cuenta con códigos temporales (expiración de 60 min).
+-   **Soporte Integrado:** Canal de comunicación interna entre usuarios y administradores.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+---
+
+## 📝 Próximos Pasos (Pendientes)
+
+-   [ ] **App Móvil:** Desarrollo en **React Native** (Módulos de Auth, Home, Simulador y Biblioteca).
+
+---
+
+> **Nota:** Todos los modelos implementan `SoftDeletes` para prevenir la pérdida accidental de datos financieros.
