@@ -39,9 +39,13 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
     // Tasas de inversión
     Route::get('/tasas', [InvestmentRateController::class, 'index'])->name('tasas.index');
+    Route::get('/get-rates', [InvestmentRateController::class, 'getRates'])->name('tasas.get-rates');
     Route::post('/tasas', [InvestmentRateController::class, 'store'])->name('tasas.store');
-    Route::put('/tasas/{rate}', [InvestmentRateController::class, 'update'])->name('tasas.update');
+    Route::get('/tasas/{id_rate}', [InvestmentRateController::class, 'getRate'])->name('tasas.get-rate');
+    Route::put('/tasas', [InvestmentRateController::class, 'update'])->name('tasas.update');
     Route::delete('/tasas/{rate}', [InvestmentRateController::class, 'destroy'])->name('tasas.destroy');
+
+
 
     // Buzón
     Route::get('/buzon', [SupportMessageController::class, 'index'])->name('buzon.index');

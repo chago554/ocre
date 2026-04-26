@@ -33,7 +33,7 @@ class PostController extends Controller
         try {
             $query = Post::query();
 
-            $allowed = ['title', 'is_published', 'read_time', 'created_at'];
+            $allowed = ['title', 'is_published', 'read_time', 'updated_at'];
             $sorted  = false;
             foreach ((array) $request->input('sort', []) as $s) {
                 if (in_array($s['field'] ?? '', $allowed)) {
@@ -177,13 +177,19 @@ class PostController extends Controller
             DB::commit();
             return response()->json([
                 "message" => "Post actualizado con exito!"
-            ], 202);  
+            ], 201);  
         } catch (\Throwable $th) {
             DB::rollBack();
             throw new PostsException("Error al actualizar el post");
         }
     }
 
+    /**
+     * Eliminacion logica de un post
+     *
+     * @param Post $post
+     * @return JsonResponse
+     */
     public function destroy(Post $post): JsonResponse
     {
        DB::beginTransaction();

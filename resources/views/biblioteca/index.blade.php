@@ -74,7 +74,7 @@
                                 const value = cell.getValue();
                                 if (!value) return "";
                                 const date = new Date(value);
-                                return new Intl.DateTimeFormat('es-ES', {
+                                return new Intl.DateTimeFormat('es-MX', {
                                     day: '2-digit',
                                     month: '2-digit',
                                     year: 'numeric',
@@ -163,7 +163,7 @@
             }
 
             function remove(id_post) {
-                Modal.delete('¿Eliminar artículo?', 'El artículo se enviará a la papelera.').then(result => {
+                Modal.delete('¿Eliminar post?', 'El post se enviará a la papelera.').then(result => {
                     if (!result.isConfirmed) return;
 
                     axios.delete(`{{ url('/biblioteca') }}/${id_post}`).then(async (response) => {
