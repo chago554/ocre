@@ -45,12 +45,12 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::put('/tasas', [InvestmentRateController::class, 'update'])->name('tasas.update');
     Route::delete('/tasas/{rate}', [InvestmentRateController::class, 'destroy'])->name('tasas.destroy');
 
-
-
     // Buzón
     Route::get('/buzon', [SupportMessageController::class, 'index'])->name('buzon.index');
+    Route::get('/get-buzon', [SupportMessageController::class, 'getBuzon'])->name('buzon.get-buzon');
     Route::get('/buzon/{message}', [SupportMessageController::class, 'show'])->name('buzon.show');
     Route::patch('/buzon/{message}/resolve', [SupportMessageController::class, 'toggleResolve'])->name('buzon.resolve');
+    
     Route::delete('/buzon/{message}', [SupportMessageController::class, 'destroy'])->name('buzon.destroy');
 });
 

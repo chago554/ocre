@@ -2,38 +2,54 @@
 
 namespace App\Http\Controllers\Web;
 
+use App\Exceptions\SupportMessagesException;
 use App\Http\Controllers\Controller;
 use App\Models\SupportMessage;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class SupportMessageController extends Controller
 {
-    public function index(Request $request)
+    /**
+     * Consulta los mensajes 
+     *
+     * @return void
+     */
+    public function index()
     {
-        if ($request->wantsJson()) {
+        return view('buzon.index');
+    }
+
+    /**
+     * Consulta los mensages de soporte
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function getBuzon(Request $request): JsonResponse
+    {
+        try {
             $query = SupportMessage::with('user');
 
-            $allowed = ['subject', 'is_resolved', 'created_at'];
+            $allowed = ['created_at', 'is_resolved', 'updated_at'];
+            $sorted  = false;
             foreach ((array) $request->input('sort', []) as $s) {
                 if (in_array($s['field'] ?? '', $allowed)) {
                     $query->orderBy($s['field'], ($s['dir'] ?? 'asc') === 'desc' ? 'desc' : 'asc');
+                    $sorted = true;
                 }
             }
-            if (!$request->has('sort')) {
+            if (!$sorted) {
                 $query->latest();
-            }
-
-            foreach ((array) $request->input('filter', []) as $f) {
-                if (($f['field'] ?? '') === 'subject' && ($f['value'] ?? '') !== '') {
-                    $query->where('subject', 'like', "%{$f['value']}%");
-                }
             }
 
             $size = max(1, min((int) $request->input('size', 15), 100));
             return response()->json($query->paginate($size));
-        }
 
-        return view('buzon.index');
+        } catch (\Throwable $th) {
+            throw new SupportMessagesException("Error al consultar los mensajes: " . $th->getMessage());
+        }
     }
 
     public function show(SupportMessage $message)
@@ -42,25 +58,71 @@ class SupportMessageController extends Controller
         return view('buzon.show', compact('message'));
     }
 
-    public function toggleResolve(Request $request, SupportMessage $message)
+    /**
+     * Cambia el estado del mensaje
+     *
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function toggleResolve(Request $request): JsonResponse
     {
-        $message->update(['is_resolved' => !$message->is_resolved]);
-        if ($request->wantsJson()) {
-            return response()->json([
-                'message'     => 'Estado del mensaje actualizado.',
-                'is_resolved' => $message->is_resolved,
+        DB::beginTransaction();
+        try {
+            $message = SupportMessage::where('id', $request->id_message)->first();
+            if(!$message){
+                return response()->json([
+                    'message' => 'No se encontro el mensaje'
+                ], 404);
+            }
+            $current_status = $message->is_resolved;
+            $new_status = $current_status == 1 ? 0 : 1;
+
+            $message->update([
+                'is_resolved' => $new_status
             ]);
+            
+            DB::commit();
+            return response()->json([
+                'message' => "Estado actualizado con exito",
+                'is_resolved' => $message->is_resolved
+
+            ], 200);
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            throw new SupportMessagesException("Error el cambiar estado del message");
+            
         }
-        return back()->with('success', 'Estado del mensaje actualizado.');
     }
 
-    public function destroy(SupportMessage $message)
+    /**
+     * Eliminacion logica del mensaje
+     *
+     * @param SupportMessage $message
+     * @return JsonResponse
+     */
+    public function destroy(SupportMessage $message): JsonResponse
     {
-        $message->delete();
-        if (request()->wantsJson()) {
-            return response()->json(['message' => 'Mensaje eliminado correctamente.']);
+       DB::beginTransaction();
+
+       try {
+        $message = SupportMessage::where('id', $message->id)->first();
+
+        if(!$message){
+            return response()->json([
+                'message' => 'Mensaje no encontrado.'
+            ], 404);
         }
-        return redirect()->route('buzon.index')
-            ->with('success', 'Mensaje eliminado correctamente.');
+
+        $message->delete();
+        DB::commit();
+
+        return response()->json([
+            'message' => 'Mensaje eliminado con exito.'
+        ], 200);
+       } catch (\Throwable $th) {
+        DB::rollBack();
+        throw new SupportMessagesException("Error al eliminar mensaje");
+       }
+
     }
 }

@@ -13,7 +13,7 @@
         <form method="POST" action="{{ route('biblioteca.store') }}" class="space-y-6">
             @csrf
 
-            <div>
+            <div>   
                 <x-input-label for="title" value="Título" />
                 <x-text-input id="title" name="title" class="mt-1 w-full" value="{{ old('title') }}" required
                     placeholder="Ingrese el titulo" />

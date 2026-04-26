@@ -19,3 +19,14 @@ Breadcrumbs::for('editarPost', function (BreadcrumbTrail $trail) {
     $trail->parent('posts');
     $trail->push('Editar post', route('biblioteca.create'));
 });
+
+// Buzon
+Breadcrumbs::for('buzon', function (BreadcrumbTrail $trail) {
+    $trail->push('Buzón', route('buzon.index'));
+});
+
+// Buzon > Ver mensaje
+Breadcrumbs::for('verMensaje', function (BreadcrumbTrail $trail) {
+    $trail->parent('buzon');
+    $trail->push('Ver mensaje');
+});
