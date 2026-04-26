@@ -16,9 +16,9 @@ return new class extends Migration
             $table->string('title');
             $table->string('slug')->unique();
             $table->longText('content');
-            $table->text('image_url');
+            $table->text('image_url')->nullable();
             $table->integer('read_time');
-            $table->jsonb('category');
+            $table->jsonb('category')->nullable();
             $table->boolean('is_published');
             $table->timestamps();
             $table->softDeletes();

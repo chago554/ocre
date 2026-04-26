@@ -45,3 +45,118 @@
     border-color: #E8A020 !important;
     color: #E8A020 !important;
 }
+
+/* ── Tabulator — Tema OCRE ─────────────────────────────── */
+.tabulator {
+    background: transparent !important;
+    border: none !important;
+    font-size: 0.875rem;
+    color: #374151;
+}
+.tabulator .tabulator-header {
+    background: transparent !important;
+    border-top: none !important;
+    border-bottom: 1px solid #d1d5db !important;
+    box-shadow: none !important;
+}
+.tabulator .tabulator-header .tabulator-col {
+    background: transparent !important;
+    border: none !important;
+    color: #6b7280;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    padding: 0 1rem 0.75rem 0 !important;
+}
+.tabulator .tabulator-header .tabulator-col:last-child { padding-right: 0 !important; }
+.tabulator .tabulator-header .tabulator-col .tabulator-col-content { padding: 0 !important; }
+.tabulator .tabulator-header .tabulator-col.tabulator-sortable:hover { background: transparent !important; }
+.tabulator .tabulator-header .tabulator-col .tabulator-col-sorter { color: #d1d5db; }
+.tabulator .tabulator-header .tabulator-col.tabulator-sortable[aria-sort="asc"] .tabulator-col-sorter,
+.tabulator .tabulator-header .tabulator-col.tabulator-sortable[aria-sort="desc"] .tabulator-col-sorter { color: #E6AD56; }
+.tabulator .tabulator-tableholder {
+    background: transparent !important;
+    overflow: visible !important;
+}
+.tabulator .tabulator-tableholder .tabulator-table {
+    background: transparent !important;
+    overflow: visible !important;
+}
+.tabulator .tabulator-row {
+    background: transparent !important;
+    border-bottom: 1px solid #e5e7eb !important;
+    min-height: unset !important;
+    overflow: visible !important;
+}
+.tabulator .tabulator-row:hover { background: rgba(255,255,255,0.4) !important; }
+.tabulator .tabulator-row.tabulator-row-even { background: transparent !important; }
+.tabulator .tabulator-row .tabulator-cell {
+    border-right: none !important;
+    padding: 0.75rem 1rem 0.75rem 0 !important;
+    overflow: hidden;
+}
+/* La última celda (acciones) necesita overflow visible para dropdowns */
+.tabulator .tabulator-row .tabulator-cell:last-child {
+    overflow: visible;
+    padding-right: 0 !important;
+}
+/* Footer / Pagination */
+.tabulator .tabulator-footer {
+    background: transparent !important;
+    border-top: none !important;
+    padding: 1.25rem 0 0 !important;
+}
+.tabulator .tabulator-footer .tabulator-footer-contents { justify-content: flex-start; }
+.tabulator .tabulator-footer .tabulator-page-size {
+    border: 1px solid #e5e7eb;
+    border-radius: 0.5rem;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.8rem;
+    color: #374151;
+    background: white;
+    outline: none;
+}
+.tabulator .tabulator-footer .tabulator-paginator { display: flex; align-items: center; gap: 0.5rem; }
+.tabulator .tabulator-footer .tabulator-paginator label { color: #6b7280; font-size: 0.8rem; }
+.tabulator .tabulator-footer .tabulator-pages { display: inline-flex; gap: 0.25rem; }
+.tabulator .tabulator-footer .tabulator-page {
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.5rem;
+    color: #374151;
+    padding: 0.25rem 0.625rem;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.15s;
+    min-width: 2rem;
+    text-align: center;
+}
+.tabulator .tabulator-footer .tabulator-page:hover:not(:disabled) { border-color: #E6AD56; color: #E6AD56; }
+.tabulator .tabulator-footer .tabulator-page.active { background: #E6AD56 !important; border-color: #E6AD56 !important; color: white !important; font-weight: 600; }
+.tabulator .tabulator-footer .tabulator-page:disabled { opacity: 0.35; cursor: not-allowed; }
+.tabulator-loader-msg, .tabulator-alert-msg {
+    background: white;
+    border-radius: 0.75rem;
+    border: 1px solid #e5e7eb;
+    color: #6b7280;
+    font-size: 0.875rem;
+    padding: 0.75rem 1.5rem;
+}
+
+/* Forzar que el contenedor de la tabla permita desbordamiento */
+.tabulator-tableholder, 
+.tabulator-row, 
+.tabulator-cell {
+    overflow: visible !important;
+}
+
+/* Evitar que el 'contain' de CSS corte el dropdown */
+.tabulator-row {
+    contain: none !important;
+}
+
+/* Asegurar que el dropdown de DaisyUI esté por encima de todo */
+.dropdown-content {
+    z-index: 9999 !important;
+}

@@ -24,4 +24,12 @@ class Post extends Model
         'category',
         'is_published',
     ];
+
+    protected function casts(): array
+    {
+        return [
+            'category'     => 'array',
+            'is_published' => 'boolean',
+        ];
+    }
 }

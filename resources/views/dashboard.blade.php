@@ -5,12 +5,12 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-10">
             <x-stats-card id="count-simulaciones" title="Simulaciones Creadas" icon="zap" />
             <x-stats-card id="count-usuarios" title="Cuentas Nuevas" icon="users" />
-            <x-stats-card id="count-articulos" title="Artículos Publicados" icon="file-text" />
+            <x-stats-card id="count-posts" title="Artículos Publicados" icon="file-text" />
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 max-h-7">
             <div
-                class="lg:col-span-8 bg-Fondo p-8 rounded-3xl shadow-[1px_2px_1px_rgba(0,0,0,0.3)] border border-gray-400">
+                class="lg:col-span-8 bg-fondo p-8 rounded-3xl shadow-[1px_2px_1px_rgba(0,0,0,0.3)] border border-gray-400">
                 <h4 class="text-xl text-center text-gray-700 mb-6 font-medium">Interacción diaria</h4>
                 <div class="relative h-80">
                     <canvas id="dailyChart"></canvas>
@@ -18,23 +18,9 @@
             </div>
 
             <div
-                class="lg:col-span-4 bg-Fondo p-8 rounded-3xl shadow-[1px_2px_1px_rgba(0,0,0,0.3)] border border-gray-400 text-gray-800">
+                class="lg:col-span-4 bg-fondo p-8 rounded-3xl shadow-[1px_2px_1px_rgba(0,0,0,0.3)] border border-gray-400 text-gray-800">
                 <h4 class="text-xl mb-6 font-medium">Últimos Usuarios Registrados</h4>
-                <div class="overflow-x-auto">
-                    <table class="w-full text-left">
-                        <thead class="border-b border-gray-300 text-gray-500 uppercase text-xs">
-                            <tr>
-                                <th class="pb-3">Nombre</th>
-                                <th class="pb-3">Registro</th>
-                            </tr>
-                        </thead>
-                        <tbody id="table-users-body">
-                            <tr>
-                                <td colspan="3" class="py-4 text-center text-gray-400 text-sm">Cargando...</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+                <div id="users-table"></div>
             </div>
         </div>
     </div>
@@ -49,7 +35,7 @@
                     document.querySelector('#count-simulaciones h3').textContent = data.simulations
                         .toLocaleString();
                     document.querySelector('#count-usuarios h3').textContent = data.users.toLocaleString();
-                    document.querySelector('#count-articulos h3').textContent = data.posts.toLocaleString();
+                    document.querySelector('#count-posts h3').textContent = data.posts.toLocaleString();
                 }).catch(error => {
                     console.error('Error cargando stats:', error);
                 });
@@ -97,22 +83,30 @@
                 });
 
                 // Últimos usuarios registrados
-                axios.get(`{{ route('last-users-registers') }}`).then(async (response) => {
-                    const tbody = document.getElementById('table-users-body');
+                axios.get(`{{ route('last-users-registers') }}`).then((response) => {
                     const data = response.data.data;
-
-                    if (!data.length) {
-                        tbody.innerHTML =
-                            '<tr><td colspan="3" class="py-4 text-center text-gray-400 text-sm">Sin registros este mes.</td></tr>';
-                        return;
-                    }
-
-                    tbody.innerHTML = data.map(u => `
-                        <tr class="border-b border-gray-200 hover:bg-white/50 text-sm">
-                            <td class="py-2 font-medium">${u.name} ${u.last_name}</td>
-                            <td class="py-2 text-gray-400">${new Date(u.created_at).toLocaleDateString('es-MX')}</td>
-                        </tr>`).join('');
-
+                    new Tabulator('#users-table', {
+                        data: data,
+                        layout: 'fitColumns',
+                        placeholder: '<p class="text-sm text-gray-400 py-4 text-center">Sin registros este mes.</p>',
+                        columns: [{
+                                title: 'Nombre',
+                                field: 'name',
+                                minWidth: 120,
+                                formatter: (cell) => {
+                                    const d = cell.getRow().getData();
+                                    return `<span class="font-medium text-gray-800">${d.name ?? ''} ${d.last_name ?? ''}</span>`;
+                                },
+                            },
+                            {
+                                title: 'Registro',
+                                field: 'created_at',
+                                width: 110,
+                                formatter: (cell) =>
+                                    `<span class="text-gray-400 text-xs">${new Date(cell.getValue()).toLocaleDateString('es-MX')}</span>`,
+                            },
+                        ],
+                    });
                 }).catch(error => {
                     console.error('Error cargando usuarios:', error);
                 });

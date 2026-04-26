@@ -1,4 +1,4 @@
-<nav x-data="{ open: true }" :class="open ? 'w-64' : 'w-20'"
+<nav :class="open ? 'w-64' : 'w-20'"
     class="flex flex-col h-screen bg-light border-r border-gray-300 fixed left-0 top-0 text-gray-700 transition-all duration-300 ease-in-out z-50">
 
     <button @click="open = !open"

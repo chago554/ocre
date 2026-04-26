@@ -4,8 +4,11 @@ import Alpine from 'alpinejs';
 import Toastify from 'toastify-js';
 import 'toastify-js/src/toastify.css';
 import Swal from 'sweetalert2';
+import { TabulatorFull as Tabulator } from 'tabulator-tables';
+import 'tabulator-tables/dist/css/tabulator_simple.min.css';
 
 window.Alpine = Alpine;
+window.Tabulator = Tabulator;
 
 Alpine.start();
 

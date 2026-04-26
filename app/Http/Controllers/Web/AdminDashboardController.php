@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\Web;
 
 use App\Exceptions\AdminDashboardException;
 use App\Http\Controllers\Controller;
@@ -62,7 +62,7 @@ class AdminDashboardController extends Controller
                 'labels' => $metrics->pluck('date'), 
                 'datasets' => [
                     [
-                        'label' => 'Usuarios Activos',
+                        'label' => 'Cuentas creadas',
                         'data' => $metrics->pluck('active_users'),
                         'borderColor' => '#4ade80', // Verde
                         'backgroundColor' => 'rgba(74, 222, 128, 0.2)',

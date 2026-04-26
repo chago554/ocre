@@ -7,6 +7,9 @@ export default {
         './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',
         './storage/framework/views/*.php',
         './resources/views/**/*.blade.php',
+        "./resources/**/*.blade.php",
+        "./resources/**/*.js",
+        
     ],
 
     theme: {
@@ -16,12 +19,12 @@ export default {
             },
             colors: {
                 'success': '#1BC199',
-                'primary': '#E6AD56',
+                'ocre': '#E6AD56',
                 'links': '#3584e4',
                 'info': '#7C817D',
                 'warning': '#ECFF8C',
                 'dark': '#05060F',
-                'Fondo': '#E9EEEA',
+                'fondo': '#FFF',
                 'Blanco': '#FAFafa',
                 'light': '#D9D9D9',
                 'danger': '#E11D48',
@@ -43,7 +46,7 @@ export default {
             {
                 ocre: {
                     // Mapeo de DaisyUI a tus variables originales
-                    "primary": "#E6AD56",      // Tu 'primary'
+                    "ocre": "#E6AD56",      // Tu 'ocre'
                     "secondary": "#3584e4",    // Tu 'links'
                     "accent": "#1E293B",       // Tu 'azul'
                     "neutral": "#05060F",      // Tu 'dark'
@@ -55,7 +58,7 @@ export default {
                     "light": "#D9D9D9",        // Tu 'light'
 
                     // Colores de fondo de la página se controlan con base-200/300
-                    "base-200": "#E9EEEA",     // Tu 'Fondo'
+                    "base-200": "#E9EEEA",     // Tu 'fondo'
                 },
             },
         ],
