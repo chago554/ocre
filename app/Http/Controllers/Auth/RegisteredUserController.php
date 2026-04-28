@@ -47,6 +47,10 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
+        if ($user->role === 'user') {
+            return redirect()->route('coming-soon');
+        }
+
         return redirect(route('dashboard', absolute: false));
     }
 }

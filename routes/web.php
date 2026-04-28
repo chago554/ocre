@@ -15,6 +15,10 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified', 'admin'])->name('dashboard');
 
+Route::get('/coming-soon', function () {
+    return view('coming-soon');
+})->middleware('auth')->name('coming-soon');
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -50,7 +54,6 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/get-buzon', [SupportMessageController::class, 'getBuzon'])->name('buzon.get-buzon');
     Route::get('/buzon/{message}', [SupportMessageController::class, 'show'])->name('buzon.show');
     Route::patch('/buzon/{message}/resolve', [SupportMessageController::class, 'toggleResolve'])->name('buzon.resolve');
-    
     Route::delete('/buzon/{message}', [SupportMessageController::class, 'destroy'])->name('buzon.destroy');
 });
 
