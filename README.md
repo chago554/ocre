@@ -1,72 +1,67 @@
-# OCRE — Plataforma de Finanzas Personales
+# OCRE — Personal Finance Platform
 
-OCRE es una solución integral de gestión financiera personal que incluye un robusto panel de administración. El sistema está diseñado para operar de forma híbrida: como una **API JSON** para aplicaciones móviles y como una **aplicación web** responsiva para administradores y usuarios.
+OCRE is a comprehensive financial management solution featuring a robust administration panel. The system is architected to operate as a hybrid platform: a high-performance **JSON API** for mobile applications and a responsive **Web Application** for administrators and users.
 
 ---
 
-## 🚀 Stack Tecnológico
+## 🚀 Tech Stack
 
-| Capa | Tecnología |
+| Layer | Technology |
 | :--- | :--- |
 | **Framework** | Laravel 11 |
-| **Autenticación** | Laravel Passport (OAuth 2.0) + Breeze (Sesiones) |
+| **Authentication** | Laravel Passport (OAuth 2.0) + Breeze (Sessions) |
 | **Frontend** | Blade + Tailwind CSS + DaisyUI + Alpine.js |
 | **Build Tool** | Vite |
 | **Testing** | Pest PHP |
-| **Documentación API** | L5-Swagger (OpenAPI) |
+| **API Documentation** | L5-Swagger (OpenAPI) |
 
 ---
 
-## 🏗️ Arquitectura del Sistema
+## 🏗️ System Architecture
 
-El proyecto se divide en dos capas principales con responsabilidades definidas:
+The project is structured into two main layers with strictly defined responsibilities:
 
 ### 1. API (Mobile First)
-* **Auth:** Login, registro y recuperación de contraseña mediante código de 6 dígitos vía email.
-* **Finanzas:** Gestión de balance total, ingresos, gastos y categorías.
-* **Seguridad:** Protegida mediante tokens de **Passport** (`auth:api`).
+* **Auth:** Secure login, registration, and 6-digit email-based password recovery.
+* **Finances:** Management of total balance, income, expenses, and categories.
+* **Security:** All endpoints are protected via **Passport** tokens (`auth:api`).
 
-### 2. Web (Panel Administrativo)
-* **Dashboard:** Visualización de métricas diarias e interacciones mediante **Chart.js**.
-* **Gestión de Perfil:** Edición de datos, seguridad y eliminación de cuenta.
-* **Control de Acceso:** Middleware personalizado `IsAdmin` para restringir secciones críticas.
+### 2. Web (Admin Panel)
+* **Dashboard:** Visual representation of daily metrics and interactions using **Chart.js**.
+* **Profile Management:** Secure data editing and account deletion workflows.
+* **Access Control:** Custom `IsAdmin` middleware to restrict access to critical business logic.
 
 ---
 
-## 📊 Modelo de Datos y Relaciones
+## 📊 Data Model & Relationships
 
-El sistema utiliza una estructura relacional optimizada con soporte para **SoftDeletes** en todos los modelos para garantizar la integridad del historial.
-
-
-
-[Image of database schema relationship diagram]
-
+The system utilizes an optimized relational structure with **SoftDeletes** implemented across all models to ensure historical data integrity.
 
 * **User** 1:N **Transaction** N:1 **Category**
 * **User** 1:N **Simulation**
 * **User** 1:N **SupportMessage**
-* **Category:** Clasificación por tipo (gasto, ingreso, meta).
-* **InvestmentRate:** Parámetros para el simulador financiero.
-* **DailyMetric:** Agregados de datos para analíticas del dashboard.
-* **Post:** Artículos educativos con metadatos en formato `JSONB`.
+* **Category:** Classification by type (expense, income, goal).
+* **InvestmentRate:** Parameters for the financial simulator engine.
+* **DailyMetric:** Aggregated data for high-performance dashboard analytics.
+* **Post:** Educational articles utilizing `JSONB` metadata.
 
 ---
 
-## ✨ Características Destacadas
+## ✨ Key Features
 
--   **Doble Autenticación:** Manejo simultáneo de sesiones de estado (Web) y tokens stateless (API).
--   **Sistema de Roles:** Implementación de niveles `admin` y `user` con middleware de acceso.
--   **Agregación de Datos:** Comando personalizado `app:aggregate-daily-metrics` para el procesamiento de estadísticas.
--   **Simulador de Inversiones:** Cálculo dinámico de rendimientos basado en capital inicial y plazos mensuales.
--   **Seguridad en Reset:** Flujo de recuperación de cuenta con códigos temporales (expiración de 60 min).
--   **Soporte Integrado:** Canal de comunicación interna entre usuarios y administradores.
-
----
-
-## 📝 Próximos Pasos (Pendientes)
-
--   [ ] **App Móvil:** Desarrollo en **React Native** (Módulos de Auth, Home, Simulador y Biblioteca).
+- **Dual Authentication:** Simultaneous handling of stateful sessions (Web) and stateless tokens (API).
+- **Role-Based Access Control (RBAC):** Native implementation of `admin` and `user` tiers with custom middleware.
+- **Data Aggregation:** Custom `app:aggregate-daily-metrics` command for optimized statistics processing.
+- **Investment Simulator:** Dynamic yield calculation based on initial capital and monthly terms.
+- **Secure Reset Flow:** Account recovery with time-limited (60 min) temporary codes.
+- **Integrated Support:** Internal communication channel between users and administrators.
 
 ---
 
-> **Nota:** Todos los modelos implementan `SoftDeletes` para prevenir la pérdida accidental de datos financieros.
+## 📝 Roadmap
+
+- [ ] **Mobile App:** Development in **React Native** (Modules: Auth, Home, Simulator, and Library).
+
+---
+
+> **Note:** All models implement `SoftDeletes` to prevent accidental loss of sensitive financial data.
